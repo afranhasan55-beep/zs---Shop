@@ -11,13 +11,10 @@
         /* --- Daraz Premium Theme Variables --- */
         :root {
             --primary: #F85606;       /* Daraz Orange */
-            --primary-dark: #D04200;
-            --blue: #0F1568;          /* Daraz Navy Blue */
             --bg: #EFF0F5;            /* Background Grey */
             --white: #ffffff;
             --text-black: #212121;
             --text-grey: #757575;
-            --green: #00BFA5;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -39,8 +36,8 @@
         /* --- Home Page Content --- */
         #homePage { display: block; }
 
-        /* Slider */
-        .slider { width: 94%; margin: 15px auto; border-radius: 12px; overflow: hidden; height: 160px; }
+        /* Slider (Updated with High Quality Image) */
+        .slider { width: 94%; margin: 15px auto; border-radius: 12px; overflow: hidden; height: 160px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .slider img { width: 100%; height: 100%; object-fit: cover; }
 
         /* Categories (Icons) */
@@ -69,7 +66,7 @@
         .card-old { font-size: 11px; color: var(--text-grey); text-decoration: line-through; }
         .card-rating { font-size: 10px; color: #ffc107; margin-top: 5px; }
 
-        /* --- Product Details Page (Hidden by default) --- */
+        /* --- Product Details Page --- */
         #detailsPage { display: none; background: var(--white); min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; z-index: 2000; overflow-y: auto; padding-bottom: 80px; }
         
         .p-header { position: absolute; top: 10px; left: 10px; z-index: 10; }
@@ -124,7 +121,7 @@
         </div>
 
         <div class="slider">
-            <img src="https://icms-image.slatic.net/images/ims-web/458d4688-ae26-4e6d-8f39-c26164dc698e.jpg" alt="Banner">
+            <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Banner">
         </div>
 
         <div class="categories">
@@ -203,10 +200,8 @@
 
             <div class="p-specs">
                 <div class="p-section-head">Product Highlights & Specifications</div>
-                <ul class="spec-list" id="detailSpecs">
-                    </ul>
-                <div style="margin-top:15px; font-size:13px; color:#555; line-height:1.6;" id="detailDesc">
-                    </div>
+                <ul class="spec-list" id="detailSpecs"></ul>
+                <div style="margin-top:15px; font-size:13px; color:#555; line-height:1.6;" id="detailDesc"></div>
             </div>
 
             <div class="p-specs" style="margin-top:10px;">
@@ -214,11 +209,6 @@
                 <div style="font-size:12px; margin-top:10px;">
                     <strong>User123</strong> <span style="color:#ffc107;">⭐⭐⭐⭐⭐</span>
                     <p>Good product. Delivery was fast. Same as picture.</p>
-                </div>
-                <div style="border-top:1px solid #eee; margin:10px 0;"></div>
-                <div style="font-size:12px;">
-                    <strong>Ahmed_K</strong> <span style="color:#ffc107;">⭐⭐⭐⭐</span>
-                    <p>Price is reasonable. Quality is okay.</p>
                 </div>
             </div>
         </div>
@@ -236,89 +226,57 @@
     </div>
 
     <script>
-        // --- 1. SUPER DATABASE (60 Products with REAL Details) ---
-        const products = [
-            {
-                id: 1,
-                name: "Xiaomi 33W SonicCharge 2.0 Charger Combo (Type-A + Type-C Cable) - White",
-                price: 499,
-                old: 1800,
-                img: "https://static-01.daraz.com.bd/p/d921a2273039d99723528b753c848520.jpg",
-                images: [
-                    "https://static-01.daraz.com.bd/p/d921a2273039d99723528b753c848520.jpg",
-                    "https://static-01.daraz.com.bd/p/9f848074d0089a69137d5781a798533c.jpg",
-                    "https://static-01.daraz.com.bd/p/f228d4400e96472648792030999036f0.jpg"
-                ],
-                specs: [
-                    "Brand: Xiaomi",
-                    "Power: 33W Fast Charging",
-                    "Cable: Type-C Included",
-                    "Input: 100-240V, 50/60Hz",
-                    "Protection: Over-voltage protection"
-                ],
-                desc: "Original Xiaomi 33W charger ensures your device charges quickly and safely. Compatible with Redmi Note 10, Note 11, POCO X3, and other Type-C devices."
-            },
-            {
-                id: 2,
-                name: "Misty Box - Surprise Gadget Box (Win Phones, Watches, Headphones)",
-                price: 99,
-                old: 500,
-                img: "https://static-01.daraz.com.bd/p/4e5662964e93512359763583d057462d.jpg",
-                images: ["https://static-01.daraz.com.bd/p/4e5662964e93512359763583d057462d.jpg", "https://via.placeholder.com/500"],
-                specs: ["Type: Mystery Box", "Win Rate: 100%", "Items: Electronics, Gadgets"],
-                desc: "Try your luck! You can win Smartwatches, Earbuds, Powerbanks, or even a Smartphone."
-            },
-            {
-                id: 3,
-                name: "360° Rotating Full Metal Phone & Tablet Stand (Foldable)",
-                price: 370,
-                old: 850,
-                img: "https://static-01.daraz.com.bd/p/b9661338787593c723797669d660e513.jpg",
-                images: ["https://static-01.daraz.com.bd/p/b9661338787593c723797669d660e513.jpg"],
-                specs: ["Material: Aluminum Alloy", "Rotation: 360 Degree", "Compatible: All Phones & Tabs"],
-                desc: "Premium quality metal stand. Perfect for watching movies, office desk setup, and video calls."
-            },
-            {
-                id: 4,
-                name: "Women's Comfortable Cotton Bra (Set of 4 Pcs) - Multicolor",
-                price: 450,
-                old: 900,
-                img: "https://static-01.daraz.com.bd/p/59c553564e03512359763583d057462d.jpg",
-                images: ["https://static-01.daraz.com.bd/p/59c553564e03512359763583d057462d.jpg"],
-                specs: ["Fabric: 100% Cotton", "Type: Non-Wired", "Wash: Hand Wash Only"],
-                desc: "Very soft and comfortable for daily use. Breathable fabric ensures comfort all day long."
+        // --- High Quality Image Library (Unsplash) ---
+        const imageLibrary = [
+            "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=500&q=80", // Watch
+            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80", // Headphone
+            "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80", // Watch White
+            "https://images.unsplash.com/photo-1572569028738-3013fb608fd3?auto=format&fit=crop&w=500&q=80", // Shirt
+            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80", // Red Shoe
+            "https://images.unsplash.com/photo-1560343090-f0409e92791a?auto=format&fit=crop&w=500&q=80", // Leather Shoe
+            "https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=500&q=80", // Headphone 2
+            "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=500&q=80", // Camera
+            "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=500&q=80", // Sneakers
+            "https://images.unsplash.com/photo-1610465299993-e6675c9f9efa?auto=format&fit=crop&w=500&q=80", // Laptop
+            "https://images.unsplash.com/photo-1579338559194-a162d19bf842?auto=format&fit=crop&w=500&q=80", // Bag
+            "https://images.unsplash.com/photo-1585565804112-f201f68c48b4?auto=format&fit=crop&w=500&q=80"  // Apple Watch
+        ];
+
+        const productNames = ["Premium Smart Watch", "Wireless Headphone Pro", "Casual Sneakers", "Running Sports Shoes", "HD Action Camera", "Leather Office Bag", "Gaming Laptop Pro", "Bluetooth Earbuds", "Men's Cotton Shirt", "Digital Wrist Watch"];
+        
+        let products = [];
+
+        // --- Generate 60 Products Automatically ---
+        function initProducts() {
+            for(let i=0; i<60; i++) {
+                let randImg = imageLibrary[i % imageLibrary.length];
+                let nextImg = imageLibrary[(i + 1) % imageLibrary.length];
+                let thirdImg = imageLibrary[(i + 2) % imageLibrary.length];
+                
+                let randName = productNames[i % productNames.length] + " - Series " + (i+1);
+                let price = Math.floor(Math.random() * 4000) + 400;
+                
+                products.push({
+                    id: i,
+                    name: randName,
+                    price: price,
+                    old: price + 550,
+                    img: randImg,
+                    // Gallery images (Main + 2 others)
+                    images: [randImg, nextImg, thirdImg], 
+                    specs: ["Premium Quality", "1 Year Warranty", "Authentic Product", "Best Seller"],
+                    desc: "Experience premium quality with this authentic product. Designed for durability and style, making it the perfect choice for daily use. Order now on ZS Shop."
+                });
             }
-        ];
-
-        // --- Auto Generate 56 More Products to make it 60 ---
-        const dummyNames = ["Wireless Bluetooth Headphone", "Smart Watch T500", "Gaming Mouse RGB", "Power Bank 10000mAh", "USB LED Light", "Men's Polo Shirt", "Leather Wallet", "Sunglass UV400"];
-        const dummyImgs = [
-            "https://static-01.daraz.com.bd/p/6a7884654e13512359763583d057462d.jpg",
-            "https://static-01.daraz.com.bd/p/1a2b3c4d5e.jpg",
-            "https://static-01.daraz.com.bd/p/f228d4400e96472648792030999036f0.jpg"
-        ];
-
-        for(let i=5; i<=60; i++) {
-            let randItem = Math.floor(Math.random() * dummyNames.length);
-            let price = Math.floor(Math.random() * 2000) + 100;
-            products.push({
-                id: i,
-                name: dummyNames[randItem] + " - Premium Quality " + i,
-                price: price,
-                old: price + 500,
-                img: dummyImgs[i % 3], // Rotate images
-                images: [dummyImgs[i % 3], dummyImgs[(i+1)%3]],
-                specs: ["High Quality Material", "1 Year Warranty", "Best Seller"],
-                desc: "This is a premium product available only on ZS Shop. Buy now to get the best deal."
-            });
         }
 
-        // --- 2. RENDER HOME PAGE ---
+        // --- Render Grid ---
         function renderHome() {
+            initProducts(); // Generate data first
             const grid = document.getElementById('productGrid');
             grid.innerHTML = products.map(p => `
                 <div class="card" onclick="openDetails(${p.id})">
-                    <img src="${p.img}" class="card-img" onerror="this.src='https://via.placeholder.com/200'">
+                    <img src="${p.img}" class="card-img" loading="lazy">
                     <div class="card-body">
                         <div class="card-title">${p.name}</div>
                         <div>
@@ -333,47 +291,41 @@
             `).join('');
         }
 
-        // --- 3. OPEN DETAILS PAGE LOGIC ---
+        // --- Open Details Page ---
         function openDetails(id) {
             const p = products.find(x => x.id === id);
             
-            // Populate Data
             document.getElementById('detailImg').src = p.img;
             document.getElementById('detailTitle').innerText = p.name;
             document.getElementById('detailPrice').innerText = "৳ " + p.price;
             document.getElementById('detailOldPrice').innerText = "৳ " + p.old;
             document.getElementById('detailDesc').innerText = p.desc;
             
-            // Render Thumbs
+            // Create thumbnails for gallery
             document.getElementById('detailThumbs').innerHTML = p.images.map((img, idx) => `
                 <img src="${img}" class="p-thumb-img ${idx===0?'active':''}" onclick="changeImg(this, '${img}')">
             `).join('');
 
-            // Render Specs
             document.getElementById('detailSpecs').innerHTML = p.specs.map(s => `<li>${s}</li>`).join('');
 
-            // Show Page
             document.getElementById('homePage').style.display = 'none';
             document.getElementById('detailsPage').style.display = 'block';
             window.scrollTo(0,0);
         }
 
-        // --- 4. CLOSE DETAILS ---
         function closeDetails() {
             document.getElementById('detailsPage').style.display = 'none';
             document.getElementById('homePage').style.display = 'block';
         }
 
-        // --- 5. IMAGE CHANGER ---
         function changeImg(el, src) {
             document.getElementById('detailImg').src = src;
             document.querySelectorAll('.p-thumb-img').forEach(x => x.classList.remove('active'));
             el.classList.add('active');
         }
 
-        // Run on load
+        // Run
         renderHome();
-
     </script>
 </body>
 </html>
