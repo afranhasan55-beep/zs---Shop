@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZS - অ্যাডমিন প্যানেল</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f0f2f5; }
+        .admin-container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { color: #333; border-bottom: 2px solid #F85606; padding-bottom: 10px; }
+        
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        
+        button { background-color: #F85606; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; }
+        button:hover { background-color: #d04604; }
+
+        .product-list { margin-top: 30px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #333; color: white; }
+        .btn-delete { background-color: red; padding: 5px 10px; width: auto; font-size: 12px; }
+        
+        .nav-link { display: block; text-align: center; margin-top: 20px; color: #F85606; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-container">
+        <h2>ZS অ্যাডমিন - নতুন পণ্য যোগ করুন</h2>
+        
+        <div class="form-group">
+            <label>পণ্যের নাম</label>
+            <input type="text" id="pName" placeholder="যেমন: স্মার্ট ওয়াচ">
+        </div>
+        <div class="form-group">
+            <label>দাম (টাকায়)</label>
+            <input type="number" id="pPrice" placeholder="যেমন: 1200">
+        </div>
+        <div class="form-group">
+            <label>ছবির লিংক (Image URL)</label>
+            <input type="text" id="pImage" placeholder="ইন্টারনেট থেকে ছবির লিংক কপি করে দিন">
+            <small style="color:gray">টিপস: গুগল ইমেজে গিয়ে ছবির উপর রাইট ক্লিক করে 'Copy Image Address' দিন।</small>
+        </div>
+        
+        <button onclick="addProduct()">পণ্য যোগ করুন</button>
+
+        <div class="product-list">
+            <h3>বর্তমান পণ্যের তালিকা</h3>
+            <table id="pTable">
+                <thead>
+                    <tr>
+                        <th>ছবি</th>
+                        <th>নাম</th>
+                        <th>দাম</th>
+                        <th>অ্যাকশন</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <a href="index.html" class="nav-link">ওয়েবসাইটে ফিরে যান (View Website)</a>
+    </div>
+
+    <script>
+        // লোকাল স্টোরেজ থেকে ডাটা লোড করা
+        function loadAdminProducts() {
+            let products = JSON.parse(localStorage.getItem('zs_products')) || [];
+            let tbody = document.querySelector('#pTable tbody');
+            tbody.innerHTML = '';
+
+            products.forEach((p, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><img src="${p.image}" width="50"></td>
+                        <td>${p.name}</td>
+                        <td>${p.price}</td>
+                        <td><button class="btn-delete" onclick="deleteProduct(${index})">ডিলিট</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        // পণ্য যোগ করার ফাংশন
+        function addProduct() {
+            let name = document.getElementById('pName').value;
+            let price = document.getElementById('pPrice').value;
+            let image = document.getElementById('pImage').value;
+
+            if(name === '' || price === '') {
+                alert("নাম এবং দাম অবশ্যই দিতে হবে!");
+                return;
+            }
+
+            // নতুন পণ্য অবজেক্ট
+            let newProduct = { name, price, image };
+            
+            // আগের ডাটা আনা + নতুন ডাটা যোগ করা
+            let products = JSON.parse(localStorage.getItem('zs_products')) || [];
+            products.push(newProduct);
+            
+            // সেভ করা
+            localStorage.setItem('zs_products', JSON.stringify(products));
+            
+            // ফিল্ড ক্লিয়ার করা
+            document.getElementById('pName').value = '';
+            document.getElementById('pPrice').value = '';
+            document.getElementById('pImage').value = '';
+
+            loadAdminProducts();
+            alert("পণ্য সফলভাবে যোগ হয়েছে! এখন index.html চেক করুন।");
+        }
+
+        // পণ্য ডিলিট করার ফাংশন
+        function deleteProduct(index) {
+            let products = JSON.parse(localStorage.getItem('zs_products')) || [];
+            products.splice(index, 1);
+            localStorage.setItem('zs_products', JSON.stringify(products));
+            loadAdminProducts();
+        }
+
+        // পেজ লোড হলে কল হবে
+        loadAdminProducts();
+    </script>
+
+</body>
+</html>
